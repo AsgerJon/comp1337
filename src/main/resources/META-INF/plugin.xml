@@ -1,0 +1,24 @@
+<idea-plugin>
+    <id>com.asgerjon.comp1337</id>
+    <name>comp1337</name>
+    <vendor>AsgerJon</vendor>
+    <version>0.1.0</version>
+    <description><![CDATA[
+        comp1337 ("comp elite") provides locally deployed LLM code completions in PyCharm:
+        ghost-text inline suggestions served by a fill-in-the-middle model on your own machine.
+        Talks to a loopback-only server &mdash; LM Studio or Ollama (<code>/v1/completions</code>)
+        or llama.cpp <code>llama-server</code> (<code>/infill</code>).
+        Mayday (French <i>venez m'aider</i>, "come help me") for when Copilot is too slow.
+        Nothing leaves your machine.
+    ]]></description>
+    <depends>com.intellij.modules.platform</depends>
+    <extensions defaultExtensionNs="com.intellij">
+        <inline.completion.provider implementation="com.asgerjon.comp1337.LocalCompletionProvider"/>
+        <applicationService serviceImplementation="com.asgerjon.comp1337.Comp1337Settings"/>
+        <applicationConfigurable parentId="tools"
+                                 instance="com.asgerjon.comp1337.Comp1337Configurable"
+                                 id="com.asgerjon.comp1337.Comp1337Configurable"
+                                 displayName="comp1337"/>
+        <postStartupActivity implementation="com.asgerjon.comp1337.WarmupStartupActivity"/>
+    </extensions>
+</idea-plugin>
